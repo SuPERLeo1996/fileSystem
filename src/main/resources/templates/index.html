@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>文件列表</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/fileinput.min.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/fileinput.min.js}"></script>
+    <script th:src="@{/js/zh.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div style="height: 50px">
+        <div class="panel-heading">
+            <div style="float: right">
+                <a class="btn btn-info" style="margin-right: 10px" th:href="@{'/server/user/login'}">登录</a>
+                <a class="btn btn-info" th:href="@{'/server/user/register'}">注册</a>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+                <h2>文件列表</h2>
+        </div>
+        <div class="panel-body">
+            <a class="btn btn-info" th:href="@{'/server/file/upload/page'}" style="float: right;">上传文件</a>
+        </div>
+        <div id="table_file" class="panel-body" th:fragment="table_file">
+            <table  class="table table-bordered table-hover">
+                <thread>
+                    <tr>
+                        <th>文件名称</th>
+                        <th>创建时间</th>
+                        <th>下载次数</th>
+                        <th>操作</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    <tr th:each="l : ${pageInfo.list}">
+                        <td th:text="${l.fileName}"></td>
+                        <td th:text="${l.createTime}"></td>
+                        <td th:text="${l.count}"></td>
+                        <td>
+                            <a class="btn btn-info" th:href="@{'/server/file/download/'+${l.id}}">下载</a>
+                            <button class="btn btn-info" th:onclick="|javascript:deleteFile('${l.id}')|">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <ul class="pagination" style="float: right">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function download(id){
+        window.location.href('/server/file/download/'+id);
+        document.getElementById("refresh").onclick();
+    }
+    function deleteFile(id){
+        $.ajax({
+            type: "GET",
+            url: "/server/file/delete?id="+ id,
+            success: function(){
+                alert("删除成功");
+                $('#table_file').load("/server/file/refresh/list");
+            }
+        });
+    }
+
+    function refresh() {
+        $('#table_file').load("/server/file/refresh/list");
+    }
+</script>
+</html>

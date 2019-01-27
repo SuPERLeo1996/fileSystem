@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>文件列表</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/fileinput.min.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/fileinput.min.js}"></script>
+    <script th:src="@{/js/zh.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h2>请登录</h2>
+        </div>
+        <div class="panel-body">
+            <a class="btn btn-success" th:href="@{'/server/file/list'}" style="float: right">返回首页</a>
+        </div>
+        <div class="panel-body">
+            <form method="post" action="/server/file/upload/file" enctype="multipart/form-data">
+                <input type="text" class="form-control" name="username" placeholder="请输入账户名" th:required="true"
+                       th:autofocus="true" style="margin: 10px auto;width: 500px"/>
+                <input type="password" class="form-control" name="password" placeholder="请输入密码" th:required="true"
+                       th:autofocus="true" style="margin: 10px auto;width: 500px"/>
+            </form>
+            <div style="margin-top: 10px;">
+                <button type="button" id="btn" class="btn btn-success" style="margin:0 auto;display: table;">
+                    登录</button>
+            </div>
+
+            <!--<button class="btn btn-info" th:onclick="|javascript:uploadFile()|">上传</button>-->
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function download(id){
+        window.location.href('/server/file/download/'+id);
+        document.getElementById("refresh").onclick();
+    }
+    function deleteFile(id){
+        $.ajax({
+            type: "GET",
+            url: "/server/file/delete?id="+ id,
+            success: function(){
+                alert("删除成功");
+                $('#table_file').load("/server/file/refresh/list");
+            }
+        });
+    }
+
+    function refresh() {
+        $('#table_file').load("/server/file/refresh/list");
+    }
+</script>
+</html>
