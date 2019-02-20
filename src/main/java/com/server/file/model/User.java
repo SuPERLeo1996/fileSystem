@@ -3,34 +3,63 @@ package com.server.file.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String id;
 
-    private String userName;
+    private Integer id;
 
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 用户密码
+     */
     private String password;
 
+    /**
+     * 用户邮箱
+     */
     private String email;
 
+    /**
+     * 电话号码
+     */
     private String phone;
 
-    private Integer sex;
+    /**
+     * 用户角色
+     */
+    private String role;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * 用户头像
+     */
+    private String image;
 
-    public String getId() {
+    /**
+     * 上次登录IP
+     */
+    private String lastIp;
+
+    /**
+     * 上次登录时间
+     */
+    private String lastTime;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -38,7 +67,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = password;
     }
 
     public String getEmail() {
@@ -46,7 +75,7 @@ public class User implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+        this.email = email;
     }
 
     public String getPhone() {
@@ -54,14 +83,38 @@ public class User implements Serializable {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
-    public Integer getSex() {
-        return sex;
+    public String getRole() {
+        return role;
     }
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getLastIp() {
+        return lastIp;
+    }
+
+    public void setLastIp(String lastIp) {
+        this.lastIp = lastIp;
+    }
+
+    public String getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
     }
 }
