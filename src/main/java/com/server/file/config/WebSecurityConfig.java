@@ -1,16 +1,18 @@
-/*
-package com.leo.blog.config;
+package com.server.file.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-*/
+
 /**
  * @Auther: Leo
  * @Date: 2018/11/18
  * @Description:
- *//*
-
+ */
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -30,4 +32,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 
-*/
