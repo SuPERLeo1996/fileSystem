@@ -20,20 +20,18 @@
             <a class="btn btn-success" th:href="@{'/server/file/list'}" style="float: right">返回首页</a>
         </div>
         <div class="panel-body">
-            <form method="post" action="/server/file/upload/file" enctype="multipart/form-data">
-                <input type="text" class="form-control" name="username" placeholder="请输入账户名" th:required="true"
+            <form id="formData">
+                <input type="text" class="form-control" id="username" placeholder="请输入账户名" th:required="true"
                        th:autofocus="true" style="margin: 10px auto;width: 500px"/>
-                <input type="password" class="form-control" name="password" placeholder="请输入密码" th:required="true"
+                <input type="password" class="form-control" id="password" placeholder="请输入密码" th:required="true"
                        th:autofocus="true" style="margin: 10px auto;width: 500px"/>
-                <input type="password" class="form-control" name="username" placeholder="请确认密码" th:required="true"
+                <input type="text" class="form-control" id="phone" placeholder="手机号" th:required="true"
                        th:autofocus="true" style="margin: 10px auto;width: 500px"/>
-                <input type="text" class="form-control" name="password" placeholder="手机号" th:required="true"
-                       th:autofocus="true" style="margin: 10px auto;width: 500px"/>
-                <input type="text" class="form-control" name="username" placeholder="电子邮箱" th:required="true"
+                <input type="text" class="form-control" id="email" placeholder="电子邮箱" th:required="true"
                        th:autofocus="true" style="margin: 10px auto;width: 500px"/>
             </form>
             <div style="margin-top: 10px;">
-                <button type="button" id="btn" class="btn btn-success" style="margin:0 auto;display: table;">
+                <button type="button" id="btn" class="btn btn-success" style="margin:0 auto;display: table;" onclick="save()">
                     注册</button>
             </div>
 
@@ -43,17 +41,22 @@
 </div>
 </body>
 <script type="text/javascript">
-    function download(id){
-        window.location.href('/server/file/download/'+id);
-        document.getElementById("refresh").onclick();
-    }
-    function deleteFile(id){
+    function save(){
+        var data = {
+            "username":$("#username").val(),
+            "password":$("#password").val(),
+            "phone":$("#phone").val(),
+            "email":$("#email").val(),
+        };
         $.ajax({
-            type: "GET",
-            url: "/server/file/delete?id="+ id,
+            type: "POST",
+            dataType : 'JSON',
+            contentType: 'application/json;charset=utf-8',
+            url: "/server/user/register/user",
+            data:JSON.stringify(data),
             success: function(){
-                alert("删除成功");
-                $('#table_file').load("/server/file/refresh/list");
+//                alert("删除成功");
+//                $('#table_file').load("/server/file/refresh/list");
             }
         });
     }

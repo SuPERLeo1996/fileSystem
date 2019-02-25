@@ -1,5 +1,7 @@
 package com.server.file.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,11 +14,21 @@ public class FileDetail implements Serializable {
 
     private Date createTime;
 
+    private String createTimeStr;
+
     private Integer count;
 
     private String userId;
 
     private static final long serialVersionUID = 1L;
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+    }
 
     public String getId() {
         return id;

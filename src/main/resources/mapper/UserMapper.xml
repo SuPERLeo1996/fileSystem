@@ -3,11 +3,14 @@
 <mapper namespace="com.server.file.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.server.file.model.User">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_name, password, email, phone, sex
+    id, username, password, email, phone, role, avatar, last_ip, last_time
   </sql>
   <select id="selectByExample" parameterType="com.server.file.model.UserExample" resultMap="BaseResultMap">
     select
@@ -102,10 +105,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.server.file.model.User">
-    insert into user (id, user_name, password, 
-      email, phone, sex)
-    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER})
+    insert into user (id, username, password, 
+      email, phone, role, 
+      avatar, last_ip, last_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{lastIp,jdbcType=VARCHAR}, #{lastTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.server.file.model.User">
     insert into user
@@ -113,8 +120,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="userName != null">
-        user_name,
+      <if test="username != null">
+        username,
       </if>
       <if test="password != null">
         password,
@@ -125,16 +132,25 @@
       <if test="phone != null">
         phone,
       </if>
-      <if test="sex != null">
-        sex,
+      <if test="role != null">
+        role,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="lastIp != null">
+        last_ip,
+      </if>
+      <if test="lastTime != null">
+        last_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -145,8 +161,17 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null">
-        #{sex,jdbcType=INTEGER},
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="lastIp != null">
+        #{lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -162,8 +187,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.userName != null">
-        user_name = #{record.userName,jdbcType=VARCHAR},
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
@@ -174,8 +199,17 @@
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=INTEGER},
+      <if test="record.role != null">
+        role = #{record.role,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastIp != null">
+        last_ip = #{record.lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -185,11 +219,14 @@
   <update id="updateByExample" parameterType="map">
     update user
     set id = #{record.id,jdbcType=VARCHAR},
-      user_name = #{record.userName,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=INTEGER}
+      role = #{record.role,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      last_ip = #{record.lastIp,jdbcType=VARCHAR},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,8 +234,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.server.file.model.User">
     update user
     <set>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
@@ -209,19 +246,38 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=INTEGER},
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="lastIp != null">
+        last_ip = #{lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.server.file.model.User">
     update user
-    set user_name = #{userName,jdbcType=VARCHAR},
+    set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER}
+      role = #{role,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      last_ip = #{lastIp,jdbcType=VARCHAR},
+      last_time = #{lastTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="findUserByUserName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
 </mapper>

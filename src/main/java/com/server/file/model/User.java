@@ -1,57 +1,35 @@
 package com.server.file.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
+    private String id;
 
-    private Integer id;
-
-    /**
-     * 用户名
-     */
     private String username;
 
-    /**
-     * 用户密码
-     */
     private String password;
 
-    /**
-     * 用户邮箱
-     */
     private String email;
 
-    /**
-     * 电话号码
-     */
     private String phone;
 
-    /**
-     * 用户角色
-     */
     private String role;
 
-    /**
-     * 用户头像
-     */
-    private String image;
+    private String avatar;
 
-    /**
-     * 上次登录IP
-     */
     private String lastIp;
 
-    /**
-     * 上次登录时间
-     */
-    private String lastTime;
+    private Date lastTime;
 
-    public Integer getId() {
+    private static final long serialVersionUID = 1L;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getUsername() {
@@ -59,7 +37,7 @@ public class User implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
 
     public String getPassword() {
@@ -67,7 +45,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
     public String getEmail() {
@@ -75,7 +53,7 @@ public class User implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
     public String getPhone() {
@@ -83,7 +61,7 @@ public class User implements Serializable {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getRole() {
@@ -91,15 +69,15 @@ public class User implements Serializable {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role = role == null ? null : role.trim();
     }
 
-    public String getImage() {
-        return image;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
     }
 
     public String getLastIp() {
@@ -107,14 +85,14 @@ public class User implements Serializable {
     }
 
     public void setLastIp(String lastIp) {
-        this.lastIp = lastIp;
+        this.lastIp = lastIp == null ? null : lastIp.trim();
     }
 
-    public String getLastTime() {
+    public Date getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(String lastTime) {
+    public void setLastTime(Date lastTime) {
         this.lastTime = lastTime;
     }
 }

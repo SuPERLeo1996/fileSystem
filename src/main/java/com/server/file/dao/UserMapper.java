@@ -1,5 +1,6 @@
 package com.server.file.dao;
 
+
 import com.server.file.model.User;
 import com.server.file.model.UserExample;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User findUserByUserName(@Param("username") String username);
 }

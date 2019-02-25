@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.server.file.model.FileDetail;
 import com.server.file.service.FileDetailService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,26 @@ public class FileController {
     @Autowired
     private FileDetailService fileDetailService;
 
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public String index(){
+        return "index";
+    }
+
+    @RequestMapping(value = "/index/search",method = RequestMethod.GET)
+    public String search(ModelMap map,
+                         @RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
+                         @RequestParam(value = "keywords",required = false) String keywords){
+        PageInfo pageInfo = fileDetailService.getIndexList(keywords,page,10);
+        map.put("pageInfo", pageInfo);
+        return "index1";
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(ModelMap map,
                        @RequestParam(value = "page", defaultValue = "1", required = false) Integer page) {
         PageInfo pageInfo = fileDetailService.getFileList(page, 10);
         map.put("pageInfo", pageInfo);
-        return "index";
+        return "index1";
     }
 
     @RequestMapping(value = "/refresh/list", method = RequestMethod.GET)

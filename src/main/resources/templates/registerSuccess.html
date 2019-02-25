@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>文件列表</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/fileinput.min.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/fileinput.min.js}"></script>
+    <script th:src="@{/js/zh.js}"></script>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="collapse navbar-collapse main-navbar-collapse">
+                        <ul class="navbar-brand"><strong>Athena 文件系统</strong></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h3>注册成功</h3>
+            <a class="btn btn-link" th:href="@{'/server/user/login'}">登录</a>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function download(id){
+        window.location.href('/server/file/download/'+id);
+        document.getElementById("refresh").onclick();
+    }
+    function deleteFile(id){
+        $.ajax({
+            type: "GET",
+            url: "/server/file/delete?id="+ id,
+            success: function(){
+                alert("删除成功");
+                $('#table_file').load("/server/file/refresh/list");
+            }
+        });
+    }
+
+    function refresh() {
+        $('#table_file').load("/server/file/refresh/list");
+    }
+</script>
+</html>

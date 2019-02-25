@@ -1,5 +1,6 @@
 package com.server.file.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.server.file.DTO.FileDetailDTO;
@@ -7,6 +8,7 @@ import com.server.file.dao.FileDetailMapper;
 import com.server.file.model.FileDetail;
 import com.server.file.model.FileDetailExample;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -35,25 +37,24 @@ public class FileDetailService {
     private FileDetailMapper fileDetailMapper;
 
     public PageInfo getFileList(int currentPage, int pageSize) {
+
         FileDetailExample example = new FileDetailExample();
-        PageHelper.startPage(currentPage, 10);
+        example.setOrderByClause(" create_time desc");
+        PageHelper.startPage(currentPage,pageSize);
         List<FileDetail> list = fileDetailMapper.selectByExample(example);
-        List<FileDetailDTO> result = new ArrayList<>();
-        if (CollectionUtils.isNotEmpty(list)) {
-            for (FileDetail detail : list) {
-                FileDetailDTO dto = new FileDetailDTO();
-                BeanUtils.copyProperties(detail, dto);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                dto.setCreateTime(sdf.format(detail.getCreateTime()));
-                result.add(dto);
-            }
-        }
-        PageInfo<FileDetailDTO> pageInfo = new PageInfo<>(result);
+        PageInfo<FileDetail> pageInfo = new PageInfo<>(formatTime(list));
         return pageInfo;
     }
 
     public void deleteFile(String id) {
-        fileDetailMapper.deleteByPrimaryKey(id);
+        FileDetail fileDetail = fileDetailMapper.selectByPrimaryKey(id);
+        if (fileDetail != null){
+            File file=new File(fileDetail.getFileUrl());
+            if(file.exists()&&file.isFile()){
+                file.delete();
+            }
+            fileDetailMapper.deleteByPrimaryKey(id);
+        }
     }
 
     public void addFile(MultipartFile file) throws Exception {// 获取文件名
@@ -94,6 +95,25 @@ public class FileDetailService {
     public void updateDownloadCount(FileDetail detail){
         detail.setCount(detail.getCount()+1);
         fileDetailMapper.updateByPrimaryKeySelective(detail);
+    }
+
+    public PageInfo getIndexList(String keywords,int currentPage,int pageSize){
+        FileDetailExample example = new FileDetailExample();
+        PageHelper.startPage(currentPage, pageSize);
+        example.createCriteria().andFileNameLike("%"+keywords+"%");
+        List<FileDetail> list = fileDetailMapper.selectByExample(example);
+        PageInfo<FileDetail> pageInfo = new PageInfo<>(formatTime(list));
+        return pageInfo;
+    }
+
+    private List<FileDetail> formatTime(List<FileDetail> list){
+        if (CollectionUtils.isNotEmpty(list)){
+            for (FileDetail detail : list) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                detail.setCreateTimeStr(sdf.format(detail.getCreateTime()));
+            }
+        }
+        return list;
     }
 
 }

@@ -12,6 +12,27 @@
 </head>
 <body>
 <div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="collapse navbar-collapse main-navbar-collapse">
+                        <ul class="navbar-brand"><strong>Athena 文件系统</strong></ul>
+                        <ul class="nav navbar-brand navbar-right">
+                            <li class="dropdown">
+                                <a class="btn btn-link" th:href="@{'/server/user/login'}">登录</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-brand navbar-right">
+                            <li class="dropdown">
+                                <a th:href="@{'/server/user/register'}" class="btn btn-link">注册</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
     <div class="panel panel-default">
         <div class="panel-heading text-center">
             <h2>上传文件</h2>
