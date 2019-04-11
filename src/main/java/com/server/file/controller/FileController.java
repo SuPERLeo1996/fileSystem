@@ -2,6 +2,7 @@ package com.server.file.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.server.file.DTO.ResultTO;
+import com.server.file.model.FileDetail;
 import com.server.file.service.FileDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,15 +31,11 @@ public class FileController {
     private FileDetailService fileDetailService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public Map<String, Object> getFileList(@RequestParam(value = "offset",defaultValue = "1") Integer offset,
-                                           @RequestParam(value = "limit",defaultValue = "10") Integer limit,
-                                           @RequestParam(value = "keywords",required = false) String keywords){
-        Integer page = offset/limit+1;
-        PageInfo pageInfo = fileDetailService.getFileDetailList(page, limit,keywords);
-        Map<String,Object> map = new HashMap<>();
-        map.put("rows",pageInfo.getList());
-        map.put("total",pageInfo.getTotal());
-        return map;
+    public ResultTO getFileList(@RequestParam(value = "keywords",required = false) String keywords){
+        List<FileDetail> list = fileDetailService.getFileDetailList(keywords);
+        ResultTO resultTO = new ResultTO();
+        resultTO.setResult(list);
+        return resultTO;
     }
 
 

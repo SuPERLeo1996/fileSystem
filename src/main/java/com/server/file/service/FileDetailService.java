@@ -116,17 +116,15 @@ public class FileDetailService {
         return list;
     }
 
-    public PageInfo getFileDetailList(int currentPage, int pageSize,String keyWords) {
+    public List<FileDetail> getFileDetailList(String keyWords) {
 
         FileDetailExample example = new FileDetailExample();
         example.setOrderByClause(" create_time desc");
         if (StringUtils.isNotEmpty(keyWords)){
             example.createCriteria().andFileNameLike("%"+keyWords+"%");
         }
-        PageHelper.startPage(currentPage,pageSize);
         List<FileDetail> list = fileDetailMapper.selectByExample(example);
-        PageInfo<FileDetail> pageInfo = new PageInfo<>(formatTime(list));
-        return pageInfo;
+        return list;
     }
 
 
