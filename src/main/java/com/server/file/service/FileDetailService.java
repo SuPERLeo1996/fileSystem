@@ -124,7 +124,7 @@ public class FileDetailService {
             example.createCriteria().andFileNameLike("%"+keyWords+"%");
         }
         List<FileDetail> list = fileDetailMapper.selectByExample(example);
-        return list;
+        return formatTime(list);
     }
 
 
