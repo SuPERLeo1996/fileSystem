@@ -41,16 +41,16 @@ public class ExceptionHandlerAdvice {
         return result;
     }
 
-//    @ExceptionHandler({LoginException.class})
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public ResultTO loginResponse(LoginException le) {
-//        ResultTO result = new ResultTO();
-//        result.setSuccess(false);
-//        result.setCode(401);
-//        result.setMsg(le.getMessage());
-//        return result;
-//    }
+    @ExceptionHandler({LoginException.class})
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResultTO loginResponse(LoginException le) {
+        ResultTO result = new ResultTO();
+        result.setSuccess(false);
+        result.setCode(401);
+        result.setMsg(le.getMessage());
+        return result;
+    }
 
 //    @ExceptionHandler({PollingException.class})
 //    @ResponseStatus(HttpStatus.OK)
