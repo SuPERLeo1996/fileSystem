@@ -84,7 +84,7 @@ public class LoginController {
             try {
                 mailService.sendSimpleMail(email, "注册验证码", message);
             }catch (Exception e){
-                logger.error(e.getMessage());
+                logger.error(e.getMessage(),e);
             }
             if (redisUtil.hasKey("checkCode:"+ email)){
                 redisUtil.del("checkCode:"+ email);
