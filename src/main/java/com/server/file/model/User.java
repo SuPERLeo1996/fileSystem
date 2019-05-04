@@ -22,6 +22,8 @@ public class User implements Serializable {
 
     private Date lastTime;
 
+    private String code;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -94,5 +96,13 @@ public class User implements Serializable {
 
     public void setLastTime(Date lastTime) {
         this.lastTime = lastTime;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

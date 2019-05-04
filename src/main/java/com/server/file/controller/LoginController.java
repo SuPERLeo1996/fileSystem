@@ -46,10 +46,12 @@ public class LoginController {
         }
         String token = loginService.login(accountDTO.getUsername(),accountDTO.getPassword());
         if (StringUtils.isNotEmpty(token)){
-            Cookie cookie = new Cookie("token",token);
-            cookie.setPath("/");
-            cookie.setMaxAge(24 * 60 * 60);
-            response.addCookie(cookie);
+//            Cookie cookie = new Cookie("token",token);
+//            cookie.setPath("/");
+//            cookie.setMaxAge(24 * 60 * 60);
+//            cookie.setDomain("localhost:63342");
+//            response.addCookie(cookie);
+            resultTO.setResult(token);
             return resultTO;
         }else {
             throw new LoginException("登录失败");
@@ -57,8 +59,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login/info/get",method = RequestMethod.GET)
-    public ResultTO getLoginInfo(HttpServletRequest request){
-        String token = request.getHeader("access_token");
+    public ResultTO getLoginInfo(@RequestParam("token") String token){
         ResultTO resultTO = new ResultTO();
         AccountDTO accountDTO = loginService.getLoginInfo(token);
         resultTO.setResult(accountDTO);

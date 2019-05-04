@@ -1,7 +1,5 @@
 package com.server.file.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,21 +12,15 @@ public class FileDetail implements Serializable {
 
     private Date createTime;
 
-    private String createTimeStr;
-
     private Integer count;
 
     private String userId;
 
+    private String fileSuffix;
+
+    private String createTimeStr;
+
     private static final long serialVersionUID = 1L;
-
-    public String getCreateTimeStr() {
-        return createTimeStr;
-    }
-
-    public void setCreateTimeStr(String createTimeStr) {
-        this.createTimeStr = createTimeStr;
-    }
 
     public String getId() {
         return id;
@@ -76,5 +68,25 @@ public class FileDetail implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getFileSuffix() {
+        return fileSuffix;
+    }
+
+    public void setFileSuffix(String fileSuffix) {
+        this.fileSuffix = fileSuffix == null ? null : fileSuffix.trim();
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

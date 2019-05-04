@@ -8,6 +8,7 @@ import com.server.file.model.User;
 import com.server.file.model.UserExample;
 import com.server.file.util.MD5Util;
 import com.server.file.util.RedisUtil;
+import com.server.file.util.StringCheckUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,12 @@ public class LoginService {
     private RedisUtil redisUtil;
 
     public String login(String username,String password){
-        User user = userMapper.findUserByUserName(username);
+        User user;
+        if (StringCheckUtil.isEmail(username)){
+            user = userMapper.findUserByEmail(username);
+        }else {
+            user = userMapper.findUserByUserName(username);
+        }
         if (user == null){
             throw new CommonException("用户不存在");
         }
@@ -61,6 +67,7 @@ public class LoginService {
         long count = userMapper.countByExample(userExample);
         if (count == 0){
             user.setId(UUID.randomUUID().toString().replaceAll("-",""));
+            user.setPassword(MD5Util.getSaltMD5(user.getPassword()));
             userMapper.insertSelective(user);
         }else {
             throw new CommonException("用户已存在");

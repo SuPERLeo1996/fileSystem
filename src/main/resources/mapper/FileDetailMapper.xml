@@ -8,6 +8,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="file_suffix" jdbcType="VARCHAR" property="fileSuffix" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, file_name, file_url, create_time, count, user_id
+    id, file_name, file_url, create_time, count, user_id, file_suffix
   </sql>
   <select id="selectByExample" parameterType="com.server.file.model.FileDetailExample" resultMap="BaseResultMap">
     select
@@ -103,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.server.file.model.FileDetail">
     insert into file_detail (id, file_name, file_url, 
-      create_time, count, user_id
-      )
+      create_time, count, user_id, 
+      file_suffix)
     values (#{id,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{count,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}
-      )
+      #{createTime,jdbcType=TIMESTAMP}, #{count,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{fileSuffix,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.server.file.model.FileDetail">
     insert into file_detail
@@ -130,6 +131,9 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="fileSuffix != null">
+        file_suffix,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -149,6 +153,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSuffix != null">
+        #{fileSuffix,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -179,6 +186,9 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
+      <if test="record.fileSuffix != null">
+        file_suffix = #{record.fileSuffix,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -191,7 +201,8 @@
       file_url = #{record.fileUrl,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       count = #{record.count,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=VARCHAR}
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      file_suffix = #{record.fileSuffix,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -214,6 +225,9 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="fileSuffix != null">
+        file_suffix = #{fileSuffix,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -223,7 +237,20 @@
       file_url = #{fileUrl,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       count = #{count,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=VARCHAR}
+      user_id = #{userId,jdbcType=VARCHAR},
+      file_suffix = #{fileSuffix,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="getFileSuffix" resultType="java.lang.String">
+    select DISTINCT file_suffix from file_detail
+    where
+      <if test="userId != null and userId != ''">
+         user_id = #{userId}
+      </if>
+    <if test="userId == null">
+      user_id = ""
+    </if>
+  </select>
+
 </mapper>

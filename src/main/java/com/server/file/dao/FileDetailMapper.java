@@ -28,4 +28,6 @@ public interface FileDetailMapper {
     int updateByPrimaryKeySelective(FileDetail record);
 
     int updateByPrimaryKey(FileDetail record);
+
+    List<String> getFileSuffix(@Param("userId") String userId);
 }

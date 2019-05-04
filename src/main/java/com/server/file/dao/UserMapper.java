@@ -31,4 +31,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User findUserByUserName(@Param("username") String username);
+
+    User findUserByEmail(@Param("email") String email);
 }

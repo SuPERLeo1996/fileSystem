@@ -280,4 +280,12 @@
     from user
     where username = #{username,jdbcType=VARCHAR}
   </select>
+
+  <select id="findUserByEmail" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

@@ -13,6 +13,8 @@ import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class RedisConfig {
+    @Value("${redis.hostName}")
+    private String hostName;
 
     @Value("${redis.maxIdle}")
     private Integer maxIdle;
@@ -82,7 +84,7 @@ public class RedisConfig {
         //连接池
         JedisConnectionFactory.setPoolConfig(jedisPoolConfig);
         //IP地址
-        JedisConnectionFactory.setHostName("127.0.0.1");
+        JedisConnectionFactory.setHostName(hostName);
         //端口号
         JedisConnectionFactory.setPort(6379);
         //如果Redis设置有密码
