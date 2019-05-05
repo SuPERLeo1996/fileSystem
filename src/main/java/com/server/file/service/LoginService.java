@@ -62,15 +62,24 @@ public class LoginService {
     }
 
     public void register(User user){
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andUsernameEqualTo(user.getUsername());
-        long count = userMapper.countByExample(userExample);
-        if (count == 0){
-            user.setId(UUID.randomUUID().toString().replaceAll("-",""));
-            user.setPassword(MD5Util.getSaltMD5(user.getPassword()));
-            userMapper.insertSelective(user);
+        if (redisUtil.hasKey("checkCode:"+ user.getEmail())){
+            String code = (String) redisUtil.get("checkCode:"+ user.getEmail());
+            if (code.equals(user.getCode())){
+                UserExample userExample = new UserExample();
+                userExample.createCriteria().andUsernameEqualTo(user.getUsername());
+                long count = userMapper.countByExample(userExample);
+                if (count == 0){
+                    user.setId(UUID.randomUUID().toString().replaceAll("-",""));
+                    user.setPassword(MD5Util.getSaltMD5(user.getPassword()));
+                    userMapper.insertSelective(user);
+                }else {
+                    throw new CommonException("用户已存在!");
+                }
+            }else {
+                throw new CommonException("邮箱验证码错误!");
+            }
         }else {
-            throw new CommonException("用户已存在");
+            throw new CommonException("邮箱验证码失效");
         }
     }
 }

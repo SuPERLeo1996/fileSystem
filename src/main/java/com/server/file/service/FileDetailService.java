@@ -220,7 +220,6 @@ public class FileDetailService {
                 criteria.andFileSuffixEqualTo(fileSuffix);
             }
             criteria.andUserIdEqualTo(user.getId());
-            criteria.andUserIdEqualTo("");
             List<FileDetail> list = fileDetailMapper.selectByExample(example);
             return formatTime(list);
         }else {
